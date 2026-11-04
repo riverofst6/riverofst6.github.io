@@ -68,7 +68,7 @@
   top.addEventListener('click', () => scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
 
   /* Contact form: validates, then opens the visitor's email app */
-  const RECEIVER = 'riverofst6@gmail.com'; // change to your email
+  const RECEIVER = 'reymart.respecia@g.msuiit.edu.ph'; // change to your email
   const form = $('#form'), status = $('#formStatus');
   const rules = {
     name: v => v.trim().length >= 2 || 'Enter your name.',
