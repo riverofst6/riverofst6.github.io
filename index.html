@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Name | Portfolio</title>
+<meta name="theme-color" content="#0a0506">
+<meta name="description" content="Portfolio of Your Name, software developer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav" id="nav">
+  <a href="#home" class="logo">Hades<span>.</span></a>
+  <nav id="menu" aria-label="Main">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="nav-actions">
+    <button id="burger" class="icon-btn burger" aria-label="Open menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<main>
+<section id="home" class="hero">
+  <div class="hero-text">
+    <p class="status"><i></i> Available for new projects</p>
+    <h1>Software developer building reliable web and desktop applications.</h1>
+    <p class="role">I'm a <span id="typed"></span><span class="cursor">|</span></p>
+    <div class="cta">
+      <a href="#projects" class="btn primary">View my projects</a>
+      <a href="#contact" class="btn ghost">Get in touch</a>
+    </div>
+  </div>
+  <div class="term" aria-hidden="true">
+    <div class="term-bar"><i></i><i></i><i></i><span>developer.py</span></div>
+    <div class="term-body">
+      <div><span class="p">&gt;&gt;&gt;</span> developer.name</div>
+      <div class="k">'Your Name'</div>
+      <div><span class="p">&gt;&gt;&gt;</span> developer.role</div>
+      <div class="k">'Full-Stack Developer'</div>
+      <div><span class="p">&gt;&gt;&gt;</span> developer.stack</div>
+      <div class="k">['Java', 'Python', 'SQL', 'JS']</div>
+      <div><span class="p">&gt;&gt;&gt;</span> developer.available</div>
+      <div class="k">True <span class="cursor">▌</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="section reveal">
+  <h2>About me</h2>
+  <div class="about">
+    <p>Greetings, I'm Rekmar, a software developer based in Your City. I build database-backed applications and responsive websites that are clean, fast and easy to maintain. Replace this text with a short summary of your background, the problems you enjoy solving, and the kind of work you want to take on.</p>
+    <ul class="stats">
+      <li><b data-count="3">0</b>years of experience</li>
+      <li><b data-count="20">0</b>projects delivered</li>
+      <li><b data-count="12">0</b>clients and teams</li>
+    </ul>
+  </div>
+</section>
+
+<section id="experience" class="section reveal">
+  <h2>Experience</h2>
+  <ol class="timeline">
+    <li><h3>Full-Stack Developer, Company Name</h3><p>2025 to present. Built and maintained web applications, REST APIs and database schemas. Edit this to match your role.</p></li>
+    <li><h3>Junior Developer, Company Name</h3><p>2024 to 2025. Delivered features, fixed bugs and wrote tests for a team product.</p></li>
+    <li><h3>Freelance Developer</h3><p>2023 to 2024. Designed and launched websites and small business tools for clients.</p></li>
+  </ol>
+</section>
+
+<section id="skills" class="section reveal">
+  <h2>Skills</h2>
+  <div class="skills">
+    <div class="skill"><span>Java</span><div class="bar"><i data-level="85"></i></div></div>
+    <div class="skill"><span>Python</span><div class="bar"><i data-level="80"></i></div></div>
+    <div class="skill"><span>SQL and databases</span><div class="bar"><i data-level="85"></i></div></div>
+    <div class="skill"><span>JavaScript</span><div class="bar"><i data-level="80"></i></div></div>
+    <div class="skill"><span>HTML and CSS</span><div class="bar"><i data-level="90"></i></div></div>
+    <div class="skill"><span>Git and GitHub</span><div class="bar"><i data-level="80"></i></div></div>
+  </div>
+  <h3 class="sub">Tools and practices</h3>
+  <div class="tags big"><span>REST APIs</span><span>Object-Oriented Design</span><span>Data Structures</span><span>Linux</span><span>Agile</span><span>Testing</span><span>Responsive Design</span><span>Version Control</span></div>
+</section>
+
+<section id="projects" class="section reveal">
+  <h2>Projects</h2>
+  <div class="filters" role="group" aria-label="Filter projects">
+    <button class="chip active" data-filter="all">All</button>
+    <button class="chip" data-filter="web">Web</button>
+    <button class="chip" data-filter="app">Apps</button>
+    <button class="chip" data-filter="db">Database</button>
+  </div>
+  <div class="grid" id="grid">
+    <article class="card" data-cat="app"><div class="thumb">I</div><h3>Inventory Management System</h3><p>Desktop app for stock tracking, supplier orders and low-stock alerts.</p><div class="tags"><span>Java</span><span>Swing</span><span>MySQL</span></div><div class="links"><a href="#" target="_blank" rel="noopener">Source code</a></div></article>
+    <article class="card" data-cat="web"><div class="thumb">C</div><h3>Client Booking Platform</h3><p>Online scheduling with user accounts, reminders and an admin panel.</p><div class="tags"><span>PHP</span><span>MySQL</span><span>Bootstrap</span></div><div class="links"><a href="#" target="_blank" rel="noopener">Live demo</a><a href="#" target="_blank" rel="noopener">Source code</a></div></article>
+    <article class="card" data-cat="web"><div class="thumb">A</div><h3>Analytics Dashboard</h3><p>Interactive charts and filters for sales and traffic data.</p><div class="tags"><span>JavaScript</span><span>Chart.js</span><span>REST API</span></div><div class="links"><a href="#" target="_blank" rel="noopener">Live demo</a><a href="#" target="_blank" rel="noopener">Source code</a></div></article>
+    <article class="card" data-cat="web"><div class="thumb">C</div><h3>Company Website</h3><p>Fast, responsive marketing site with a contact form and blog.</p><div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div><div class="links"><a href="#" target="_blank" rel="noopener">Live demo</a><a href="#" target="_blank" rel="noopener">Source code</a></div></article>
+    <article class="card" data-cat="db"><div class="thumb">C</div><h3>Customer Database Design</h3><p>Normalised schema, indexes and 25 optimised SQL queries.</p><div class="tags"><span>SQL</span><span>ER Diagram</span><span>MySQL</span></div><div class="links"><a href="#" target="_blank" rel="noopener">Source code</a></div></article>
+    <article class="card" data-cat="app"><div class="thumb">T</div><h3>Task Automation Tool</h3><p>Python scripts that clean reports and email summaries on a schedule.</p><div class="tags"><span>Python</span><span>SQLite</span><span>SMTP</span></div><div class="links"><a href="#" target="_blank" rel="noopener">Source code</a></div></article>
+  </div>
+  <p id="empty" class="empty" hidden>No projects in this category yet.</p>
+</section>
+
+<section id="contact" class="section reveal">
+  <h2>Contact</h2>
+  <div class="contact">
+    <p>Have a project or role in mind? Send a message and I'll reply within two days.</p>
+    <form id="form" novalidate>
+      <label>Name<input id="name" name="name" type="text" autocomplete="name"><small></small></label>
+      <label>Email<input id="email" name="email" type="email" autocomplete="email"><small></small></label>
+      <label>Message<textarea id="msg" name="message" rows="5"></textarea><small></small></label>
+      <button class="btn primary" type="submit">Send message</button>
+      <p id="formStatus" role="status"></p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>© <span id="year"></span> Your Name. All rights reserved.</p>
+  <p class="social"><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a><a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a><a href="mailto:you@example.com">Email</a></p>
+</footer>
+<button id="top" class="icon-btn top" aria-label="Back to top" hidden>↑</button>
+<script src="script.js"></script>
+</body>
+</html>
