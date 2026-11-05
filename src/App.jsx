@@ -411,15 +411,15 @@ function App() {
               <div>
                 <span className="p">&gt;&gt;&gt;</span> developer.name
               </div>
-              <div className="k">&apos;Rekmar&apos;</div>
+              <div className="k">&apos;Reymart&apos;</div>
               <div>
                 <span className="p">&gt;&gt;&gt;</span> developer.role
               </div>
-              <div className="k">&apos;Full-Stack Developer&apos;</div>
+              <div className="k">&apos;Web Developer&apos;</div>
               <div>
                 <span className="p">&gt;&gt;&gt;</span> developer.stack
               </div>
-              <div className="k">[&apos;Java&apos;, &apos;Python&apos;, &apos;SQL&apos;, &apos;JS&apos;]</div>
+              <div className="k">[&apos;Java&apos;, &apos;Python&apos;, &apos;SQL&apos;, &apos;JS&apos;, &apos;C++&apos;, &apos;React&apos;]</div>
               <div>
                 <span className="p">&gt;&gt;&gt;</span> developer.available
               </div>
@@ -434,7 +434,7 @@ function App() {
           <h2>About me</h2>
           <div className="about">
             <p>
-              Greetings, I&apos;m Rekmar, a software developer based in Iligan
+              Greetings, I&apos;m Reymart, a software developer based in Iligan
               City. I build database-backed applications and responsive
               websites that are clean, fast and easy to maintain.
             </p>
@@ -576,7 +576,7 @@ function App() {
 
       <footer>
         <p>
-          © <span id="year">{new Date().getFullYear()}</span> Rekmar. All
+          © <span id="year">{new Date().getFullYear()}</span> Reymart. All
           rights reserved.
         </p>
         <p className="social">
