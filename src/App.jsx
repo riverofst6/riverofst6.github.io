@@ -65,9 +65,12 @@ const filters = [
   ['db', 'Database'],
 ];
 
-const emailServiceId = import.meta.env.service_fqdrgqs;
-const emailTemplateId = import.meta.env.template_y908i5q;
-const emailPublicKey = import.meta.env.gz1tkbKi81jdpZfMW;
+const emailServiceId =
+  import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_fqdrgqs';
+const emailTemplateId =
+  import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_y908i5q';
+const emailPublicKey =
+  import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'gz1tkbKi81jdpZfMW';
 
 const validationRules = {
   name: (value) => value.trim().length >= 2 || 'Enter your name.',
