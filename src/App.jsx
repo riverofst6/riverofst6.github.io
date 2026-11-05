@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 const projects = [
   {
@@ -64,7 +65,9 @@ const filters = [
   ['db', 'Database'],
 ];
 
-const FORM_ENDPOINT = 'https://formspree.io/f/abcdwxyz';
+const emailServiceId = import.meta.env.service_fqdrgqs;
+const emailTemplateId = import.meta.env.template_y908i5q;
+const emailPublicKey = import.meta.env.gz1tkbKi81jdpZfMW;
 
 const validationRules = {
   name: (value) => value.trim().length >= 2 || 'Enter your name.',
@@ -98,6 +101,7 @@ function App() {
   const [showTop, setShowTop] = useState(false);
   const [errors, setErrors] = useState({});
   const [formStatus, setFormStatus] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const words = ['software developer', 'full-stack engineer', 'problem solver'];
@@ -220,7 +224,8 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const values = Object.fromEntries(formData.entries());
     const nextErrors = Object.fromEntries(
       Object.entries(validationRules).map(([id, rule]) => {
@@ -234,46 +239,38 @@ function App() {
       return;
     }
 
-    if (FORM_ENDPOINT.includes('your-form-id')) {
+    if (!emailServiceId || !emailTemplateId || !emailPublicKey) {
       setFormStatus(
-        'The contact form is not connected yet. Add your Formspree endpoint in src/App.jsx.',
+        'The contact form is not configured yet. Add the EmailJS settings and try again.',
       );
       return;
     }
 
+    setIsSubmitting(true);
     try {
-      const response = await fetch(FORM_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
+      await emailjs.send(
+        emailServiceId,
+        emailTemplateId,
+        {
+          name: String(values.name),
+          email: String(values.email),
+          message: String(values.msg),
         },
-        body: formData,
-      });
-
-      if (!response.ok) {
-        if (response.status === 404) {
-          setFormStatus(
-            'Formspree could not find this form. Check the form ID in src/App.jsx.',
-          );
-        } else if (response.status === 422) {
-          setFormStatus(
-            'Formspree rejected the submission. Check that your form is active and try again.',
-          );
-        } else {
-          setFormStatus(
-            `Formspree returned an error (${response.status}). Please try again later.`,
-          );
-        }
-        return;
-      }
+        { publicKey: emailPublicKey },
+      );
 
       setFormStatus('Message sent successfully. Thanks for reaching out!');
       setErrors({});
-      event.currentTarget.reset();
-    } catch {
+      form.reset();
+    } catch (error) {
+      console.error('EmailJS contact form submission failed:', error);
       setFormStatus(
-        'Could not connect to Formspree. Check your internet connection and try again.',
+        typeof error?.text === 'string'
+          ? `Could not send your message: ${error.text}`
+          : 'Could not send your message. Check the EmailJS settings and try again.',
       );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -458,8 +455,6 @@ function App() {
             </p>
             <form
               id="form"
-              action={FORM_ENDPOINT}
-              method='POST'
               noValidate
               onSubmit={handleSubmit}
             >
@@ -501,8 +496,12 @@ function App() {
                 />
                 <small>{errors.msg}</small>
               </label>
-              <button className="btn primary" type="submit">
-                Send message
+              <button
+                className="btn primary"
+                type="submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Sending…' : 'Send message'}
               </button>
               <p id="formStatus" role="status">
                 {formStatus}
