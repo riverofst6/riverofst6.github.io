@@ -71,6 +71,9 @@ const emailTemplateId =
   import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_y908i5q';
 const emailPublicKey =
   import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'gz1tkbKi81jdpZfMW';
+const siteBasePath = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
 
 const validationRules = {
   name: (value) => value.trim().length >= 2 || 'Enter your name.',
@@ -106,6 +109,29 @@ function App() {
   const [formStatus, setFormStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const sectionPath = (section) =>
+    section === 'home' ? siteBasePath : `${siteBasePath}${section}`;
+
+  const navigateToSection = (event, section) => {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    const path = sectionPath(section);
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, '', path);
+    }
+    document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   useEffect(() => {
     const words = ['software developer', 'full-stack engineer', 'problem solver'];
     const reduceMotion = window.matchMedia(
@@ -140,6 +166,25 @@ function App() {
 
     timer = window.setTimeout(tick, 90);
     return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const scrollToCurrentSection = () => {
+      const currentPath = window.location.pathname.replace(/\/+$/, '');
+      const basePath = siteBasePath.replace(/\/+$/, '');
+      const section =
+        currentPath === basePath
+          ? 'home'
+          : currentPath.slice(basePath.length + 1);
+      document.getElementById(section)?.scrollIntoView({ behavior: 'auto' });
+    };
+
+    const timer = window.setTimeout(scrollToCurrentSection, 0);
+    window.addEventListener('popstate', scrollToCurrentSection);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener('popstate', scrollToCurrentSection);
+    };
   }, []);
 
   useEffect(() => {
@@ -284,7 +329,11 @@ function App() {
   return (
     <>
       <header className="nav" id="nav">
-        <a href="#home" className="logo">
+        <a
+          href={sectionPath('home')}
+          className="logo"
+          onClick={(event) => navigateToSection(event, 'home')}
+        >
           Hades<span>.</span>
         </a>
         <nav id="menu" className={menuOpen ? 'open' : ''} aria-label="Main">
@@ -294,9 +343,12 @@ function App() {
               return (
                 <a
                   key={section}
-                  href={`#${section}`}
+                  href={sectionPath(section)}
                   className={activeSection === section ? 'active' : ''}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={(event) => {
+                    navigateToSection(event, section);
+                    setMenuOpen(false);
+                  }}
                 >
                   {label}
                 </a>
@@ -332,10 +384,18 @@ function App() {
               <span className="cursor">|</span>
             </p>
             <div className="cta">
-              <a href="#projects" className="btn primary">
+              <a
+                href={sectionPath('projects')}
+                className="btn primary"
+                onClick={(event) => navigateToSection(event, 'projects')}
+              >
                 View my projects
               </a>
-              <a href="#contact" className="btn ghost">
+              <a
+                href={sectionPath('contact')}
+                className="btn ghost"
+                onClick={(event) => navigateToSection(event, 'contact')}
+              >
                 Get in touch
               </a>
             </div>
@@ -527,7 +587,12 @@ function App() {
           >
             GitHub
           </a>
-          <a href="#contact">Contact form</a>
+          <a
+            href={sectionPath('contact')}
+            onClick={(event) => navigateToSection(event, 'contact')}
+          >
+            Contact form
+          </a>
         </p>
       </footer>
       <button
