@@ -142,7 +142,7 @@ function App() {
   };
 
   useEffect(() => {
-    const words = ['software developer', 'full-stack engineer', 'problem solver'];
+    const words = [ 'learner', 'web developer', 'software developer', 'full-stack developer', 'problem solver'];
     const reduceMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches;
@@ -340,7 +340,7 @@ function App() {
       <svg
         className="circuit-current"
         viewBox="0 0 1440 800"
-        preserveAspectRatio="none"
+        preserveAspectRatio="xMidYMid slice"
         aria-hidden="true"
       >
         <defs>
