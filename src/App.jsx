@@ -64,6 +64,8 @@ const filters = [
   ['db', 'Database'],
 ];
 
+const FORM_ENDPOINT = 'https://formspree.io/f/abcdwxyz';
+
 const validationRules = {
   name: (value) => value.trim().length >= 2 || 'Enter your name.',
   email: (value) =>
@@ -216,7 +218,7 @@ function App() {
     return result === true;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const values = Object.fromEntries(formData.entries());
@@ -232,14 +234,47 @@ function App() {
       return;
     }
 
-    const receiver = 'reymart.respecia@g.msuiit.edu.ph';
-    const body = `${values.msg}\n\nFrom: ${values.name} (${values.email})`;
-    window.location.href = `mailto:${receiver}?subject=${encodeURIComponent(
-      `Portfolio message from ${values.name}`,
-    )}&body=${encodeURIComponent(body)}`;
-    setFormStatus("Opening your email app to send the message.");
-    setErrors({});
-    event.currentTarget.reset();
+    if (FORM_ENDPOINT.includes('your-form-id')) {
+      setFormStatus(
+        'The contact form is not connected yet. Add your Formspree endpoint in src/App.jsx.',
+      );
+      return;
+    }
+
+    try {
+      const response = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          setFormStatus(
+            'Formspree could not find this form. Check the form ID in src/App.jsx.',
+          );
+        } else if (response.status === 422) {
+          setFormStatus(
+            'Formspree rejected the submission. Check that your form is active and try again.',
+          );
+        } else {
+          setFormStatus(
+            `Formspree returned an error (${response.status}). Please try again later.`,
+          );
+        }
+        return;
+      }
+
+      setFormStatus('Message sent successfully. Thanks for reaching out!');
+      setErrors({});
+      event.currentTarget.reset();
+    } catch {
+      setFormStatus(
+        'Could not connect to Formspree. Check your internet connection and try again.',
+      );
+    }
   };
 
   const visibleProjects = projects.filter(
@@ -421,7 +456,13 @@ function App() {
               Have a project or role in mind? Send a message and I&apos;ll reply
               within two days.
             </p>
-            <form id="form" noValidate onSubmit={handleSubmit}>
+            <form
+              id="form"
+              action={FORM_ENDPOINT}
+              method='POST'
+              noValidate
+              onSubmit={handleSubmit}
+            >
               <label className={errors.name ? 'err' : ''} htmlFor="name">
                 Name
                 <input
@@ -484,7 +525,7 @@ function App() {
           >
             GitHub
           </a>
-          <a href="mailto:reymart.respecia@g.msuiit.edu.ph">Email</a>
+          <a href="#contact">Contact form</a>
         </p>
       </footer>
       <button
