@@ -1,6 +1,15 @@
 import { useEffect, useState } from 'react';
 import emailjs from '@emailjs/browser';
 
+const circuitPaths = [
+  'M-40 210h160l35-35h190l35 35h110l35-35h290l50 50h180l35 35h250',
+  'M-30 275h205l35 35h150l45-45h215l35-35h245l45 45h220l45 45h260',
+  'M-40 360h130l35-35h170l40 40h175l45-45h210l40 40h180l40-40h235l40 40h190',
+  'M-40 450h235l40-40h135l45 45h240l45-45h150l45 45h205l45-45h180l45 45h175',
+  'M-35 535h150l40-40h220l40 40h160l40-40h240l45 45h210l40-40h190l45 45h170',
+  'M-30 625h210l40-40h165l45 45h255l45-45h150l45 45h210l45-45h220l45 45h110',
+];
+
 const projects = [
   {
     category: 'app',
@@ -328,6 +337,52 @@ function App() {
 
   return (
     <>
+      <svg
+        className="circuit-current"
+        viewBox="0 0 1440 800"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <filter id="current-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2.5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        <g fill="none" stroke="#e11d2e" strokeWidth="2.4" opacity=".68">
+          {circuitPaths.map((path) => (
+            <path key={path} d={path} />
+          ))}
+        </g>
+        <g fill="#ff5a67" opacity=".7">
+          <circle cx="120" cy="210" r="4" />
+          <circle cx="385" cy="175" r="4" />
+          <circle cx="655" cy="300" r="4" />
+          <circle cx="1030" cy="405" r="4" />
+          <circle cx="290" cy="495" r="4" />
+          <circle cx="835" cy="585" r="4" />
+          <circle cx="1190" cy="630" r="4" />
+        </g>
+        <g
+          fill="none"
+          stroke="#ff8993"
+          strokeWidth="2.8"
+          strokeLinecap="round"
+          filter="url(#current-glow)"
+        >
+          {circuitPaths.map((path, index) => (
+            <path
+              key={path}
+              className={`current-path current-path-${index + 1}`}
+              pathLength="1000"
+              d={path}
+            />
+          ))}
+        </g>
+      </svg>
       <header className="nav" id="nav">
         <a
           href={sectionPath('home')}
@@ -397,6 +452,13 @@ function App() {
                 onClick={(event) => navigateToSection(event, 'contact')}
               >
                 Get in touch
+              </a>
+              <a
+                href={`${siteBasePath}resume.pdf`}
+                className="btn ghost"
+                download="Reymart-CV.pdf"
+              >
+                Download CV <span aria-hidden="true">↓</span>
               </a>
             </div>
           </div>
@@ -513,7 +575,7 @@ function App() {
           <h2>Contact</h2>
           <div className="contact">
             <p>
-              Have a project or role in mind? Send a message and I&apos;ll reply
+              Need some help with tech-related stuff? Send a message and I&apos;ll reply
               within two days.
             </p>
             <form
@@ -579,7 +641,7 @@ function App() {
           © <span id="year">{new Date().getFullYear()}</span> Reymart. All
           rights reserved.
         </p>
-        <p className="social">
+        <div className="social" aria-label="Profile links">
           <a
             href="https://github.com/riverofst6"
             target="_blank"
@@ -587,13 +649,8 @@ function App() {
           >
             GitHub
           </a>
-          <a
-            href={sectionPath('contact')}
-            onClick={(event) => navigateToSection(event, 'contact')}
-          >
-            Contact form
-          </a>
-        </p>
+          <span className="profile-pending">LinkedIn · coming soon</span>
+        </div>
       </footer>
       <button
         id="top"
